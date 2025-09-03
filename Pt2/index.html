@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheida Photography</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fff0f6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    header h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #dbb4c7, #ff9ecd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    header p { opacity: 0.8; font-size: 1.2rem; color: #444; }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 16px;
+      background: #ffe6f0;
+      box-shadow: 0 10px 25px rgba(255,105,180,0.3);
+      transform: perspective(1000px) rotateY(0);
+      transition: transform 0.6s ease;
+    }
+    .gallery-item:hover {
+      transform: perspective(1000px) rotateY(10deg) scale(1.03);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.15);
+      filter: brightness(0.7);
+    }
+
+    .caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      color: #d63384;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      transition: all 0.5s ease;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .gallery-item:hover .caption {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(248, 202, 226, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 4px 40px rgba(255,105,180,0.6);
+      animation: zoomIn 0.6s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Lightbox controls */
+    .lightbox .close, .lightbox .prev, .lightbox .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(230, 196, 214, 0.4);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+    .lightbox .close {
+      top: 30px; right: 30px; transform: none;
+      font-size: 2.5rem;
+    }
+    .lightbox .prev { left: 40px; }
+    .lightbox .next { right: 40px; }
+    .lightbox button:hover { background: rgba(206, 177, 191, 0.7); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      opacity: 0.7;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sheida Photography</h1>
+    <p style="color: #edbed6;">Dreamy moments in pink</p>
+  </header>
+
+  <section class="gallery">
+    <!-- 12 Example Images -->
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBpbmslMjBmbG93ZXJ8ZW58MHx8MHx8fDA%3D" alt="Flower 1">
+      <div class="caption">Blooming Beauty</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1596181135907-b94f2d9a04ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBpbmslMjBzdHlsZXxlbnwwfHwwfHx8MA%3D%3D" alt="Fashion 2">
+      <div class="caption">Chic Style</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1569562986415-7cbdd5710ebd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBpbmslMjBjaXR5JTIwbGlnaHR8ZW58MHx8MHx8fDA%3D" alt="City 3">
+      <div class="caption">Pink City Lights</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHx8" alt="Cake 4">
+      <div class="caption">Sweet Moments</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://plus.unsplash.com/premium_photo-1674069719655-7289402d71e9?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Portrait 5">
+      <div class="caption">Soft Portrait</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1640654506452-b54cf6dad06c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D" alt="Wedding 6">
+      <div class="caption">Romantic Vows</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1653080787673-6fdf2a68ca4f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGluayUyMHN1bnNldHxlbnwwfHwwfHx8MA%3D%3D" alt="Sunset 7">
+      <div class="caption">Sunset Glow</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1677840147134-59a6498442f0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBpbmslMjBjdXBjYWtlfGVufDB8fDB8fHww" alt="Cupcake 8">
+      <div class="caption">Sweet Cupcake</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1684959178600-d4e8cf2586d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTgyfHxwaW5rJTIwY296eSUyMGludGVyaW9yfGVufDB8fDB8fHww" alt="Interior 9">
+      <div class="caption">Cozy Interior</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://plus.unsplash.com/premium_photo-1667520040043-6568c877431e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHBpbmslMjBtYWtldXB8ZW58MHx8MHx8fDA%3D" alt="Makeup 10">
+      <div class="caption">Beauty Glow</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1597239058435-72659832515a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8" alt="Pink 11">
+      <div class="caption">Pink Dreams</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://plus.unsplash.com/premium_photo-1673809125097-0b865a6e9811?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Romantic 12">
+      <div class="caption">Romantic Scene</div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="close" id="closeBtn">&times;</button>
+    <button class="prev" id="prevBtn">&#10094;</button>
+    <img src="" alt="Expanded Image" id="lightboxImg">
+    <button class="next" id="nextBtn">&#10095;</button>
+  </div>
+
+  <footer>
+    <p>© 2025 Sheida Photography — All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentIndex = 0;
+
+    function showLightbox(index) {
+      currentIndex = index;
+      lightboxImg.src = galleryItems[index].src;
+      lightbox.classList.add('active');
+    }
+
+    galleryItems.forEach((img, index) => {
+      img.addEventListener('click', () => showLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      lightboxImg.src = galleryItems[currentIndex].src;
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      lightboxImg.src = galleryItems[currentIndex].src;
+    });
+
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
